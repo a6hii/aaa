@@ -7,7 +7,7 @@
 //     port: port,
 //     user: "abhi",
 //     password: "1234",
-//     database: "aaa_trigsy",
+//     database: "aaa",
     
 // });
 // await client.connect();
@@ -18,7 +18,7 @@
 
 const { Sequelize } = require('sequelize');
 
-const db = new Sequelize('aaa_trigsy', 'abhi', '1234', {
+const db = new Sequelize('aaa', 'abhi', '1234', {
   host: 'localhost',
   dialect: 'postgres',
   define: {
