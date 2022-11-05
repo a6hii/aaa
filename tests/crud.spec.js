@@ -24,7 +24,7 @@ describe('test create tables', () => {
         // user_id: 1,
         // application_id: 45
     };
-    test("Should have key record and msg when created", async () => {
+    test("Should have user_id and token when created", async () => {
         const mockCreateUser = jest.fn(() => u);
         const mockCreateApp = jest.fn(() => a);
 		const mockCreateSession = jest.fn(() => s);
