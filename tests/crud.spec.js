@@ -1,9 +1,6 @@
-const db = require('../config/database');
 const app = require('../index');
-const Sessions = require('../model/model');
 const request = require('supertest');
 const SessionDao = require('../crud');
-
 
 describe('test create tables', () => {
     const s = {
