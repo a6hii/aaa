@@ -1,43 +1,41 @@
-const SessionDao = require("../crud");
-const supertest = require('supertest');
+const db = require('../config/database');
 const app = require('../index');
-const SessionController = require("../controller/session.controller");
+const Sessions = require('../model/model');
+const request = require('supertest');
 
-// describe('Note route', function () {
-//     let app
-
-//     before("Mock db connection and load app", async function () {
-//         const pool
-//     })
-// })
-
-jest.mock('../model/model', () => ()=> {
-    const SequelizeMock = require("sequelize-mock");
-    const dbMock = new SequelizeMock();
-    return dbMock.define('sessions', {
-        device_id: 25,
-        token: "asdasd1",
+describe('test create tables', () => {
+    const u = {
+        user_id: 1,
+        name: "abhi",
+        phone_number: "45612345",
+        email: "aaa@ssss.cd",
+        gender: "M",
+        dob:"1998-04-04"
+    };
+    const a = {
+        application_id: 45,
+        application_name: "Android"
+    };
+    const s = {
+        device_id: 78,
+        token: "asmakd",
         created_at: "2022-08-01 16:54:05+05:30",
-        lastActive_at: "2022-10-01 16:55:00+05:30",
-        user_id: 11,
-        application_id: 111
-    })
-})
+        lastActive_at: "2022-10-07 18:54:05+05:30",
+        // user_id: 1,
+        // application_id: 45
+    };
+    test("Should have key record and msg when created", async () => {
+        const mockCreateUser = jest.fn(() => u);
+        const mockCreateApp = jest.fn(() => a);
+		const mockCreateSession = jest.fn(() => s);
+		jest
+			.spyOn(Sessions, "create")
+			.mockImplementation(() => mockCreateSession());
 
-describe("Test Sequelize Mocking", () => {  
-    it("Should get value from mock", async () => {
-      const aa = await supertest(app).get('/');
-      expect(aa.status).toBe(200);
-     
-      //expect(aa.length).toBe(1);
-      
-    })
+		const res = await request(app).post("/").send(s);
+
+		expect(mockCreateSession).toHaveBeenCalledTimes(1);
+		expect(res.body).toHaveProperty("user_id");
+		expect(res.body).toHaveProperty("token");
+	});
   })
-
-// describe("Test Sequelize Mocking", () => {  
-//     it("tests the base route and returns true for status", async () => {
-//       const aa = await supertest(app).get('/');
-//       expect(aa.status).toBe(404);
-//       //expect(aa.body.status).toBe(true); 
-//     })
-//   })
